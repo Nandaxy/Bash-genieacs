@@ -107,8 +107,6 @@ ExecStart=/usr/bin/genieacs-ui
 WantedBy=default.target
 EOF
 
-# Membuat file konfigurasi logrotate untuk GenieACS
-echo "Membuat file konfigurasi logrotate untuk GenieACS..."
 cat <<EOF > /etc/logrotate.d/genieacs
 /var/log/genieacs/*.log /var/log/genieacs/*.yaml {
     daily
@@ -132,3 +130,7 @@ systemctl start genieacs-ui
 
 echo -e "${GREEN}Instalasi GenieACS selesai!${RESET}"
 echo -e "${GREEN}Buka http://$lokal_ip:3000 di browser untuk akses UI GenieACS.${RESET}"
+echo -e "${GREEN}------------------------------${RESET}"
+echo -e "${GREEN}Terima kasih telah menggunakan script ini!${RESET}"
+echo -e "${GREEN}Follow Instagram: @nandaaa_79${RESET}"
+echo -e "${GREEN}------------------------------${RESET}"
