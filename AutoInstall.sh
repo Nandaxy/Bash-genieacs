@@ -13,14 +13,12 @@ if [[ ! "$konfirmasi" =~ ^[Yy]$ ]]; then
 fi
 
 echo -e "${YELLOW}Memulai instalasi GenieACS...${RESET}"
-# Instal Node.js
 echo "Menginstal Node.js..."
 curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh
 bash nodesource_setup.sh
 apt install -y nodejs
 node -v
 
-# Instal MongoDB
 echo "Menginstal MongoDB..."
 curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
@@ -29,17 +27,14 @@ apt install -y mongodb-org
 systemctl start mongod.service
 systemctl enable mongod
 
-# Verifikasi MongoDB
 mongo --eval 'db.runCommand({ connectionStatus: 1 })'
 
-# Instal GenieACS
 echo "Menginstal GenieACS..."
 npm install -g --unsafe-perm genieacs@1.2.7
 useradd --system --no-create-home --user-group genieacs
 mkdir -p /opt/genieacs/ext
 chown genieacs:genieacs /opt/genieacs/ext
 
-# Konfigurasi GenieACS
 echo "Membuat file konfigurasi GenieACS..."
 cat <<EOF > /opt/genieacs/genieacs.env
 GENIEACS_CWMP_ACCESS_LOG_FILE=/var/log/genieacs/genieacs-cwmp-access.log
@@ -55,7 +50,6 @@ chmod 600 /opt/genieacs/genieacs.env
 mkdir -p /var/log/genieacs
 chown genieacs:genieacs /var/log/genieacs
 
-# Membuat file unit systemd untuk GenieACS
 echo "Membuat file unit systemd untuk GenieACS..."
 cat <<EOF > /etc/systemd/system/genieacs-cwmp.service
 [Unit]
@@ -125,7 +119,6 @@ cat <<EOF > /etc/logrotate.d/genieacs
 }
 EOF
 
-# Mengaktifkan dan memulai layanan GenieACS
 echo "Mengaktifkan dan memulai layanan GenieACS..."
 systemctl daemon-reload
 systemctl enable genieacs-cwmp
