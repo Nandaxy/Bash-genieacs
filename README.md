@@ -6,7 +6,7 @@ Pastikan telah menginstall git dan curl
 
 ```bash
 apt install git curl -y
-git clone https://github.com/Nandaxy/Bash-genieacs
+git clone https://github.com/Nandaxy/auto-install-genieacs
 ```
 
 Masuk ke folder Dan Jalankan script nya
